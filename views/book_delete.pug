@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  h1= title
+
+  if book
+    if bookInstances.length > 0
+      p #[strong There are #{bookInstances.length} associated book instances, you must delete them first.]
+      ul
+        each instance in bookInstances
+          li
+            a(href=instance.url)= instance.book 
+
+    else
+      p Are you sure you want to delete the book '#{book.title}'?
+      form(action=`/catalog/book/${book._id}/delete` method='POST')
+        button.btn.btn-danger(type='submit') Delete
+  else
+    p Book not found.
